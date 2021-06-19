@@ -40,14 +40,14 @@ class PrayerTimeActivity : AppCompatActivity() {
 
         textCityName.text = city
 
-        var myCurrentDay = "$day $monthString, $hour:$minute"
+        var myCurrentDay = "$day $monthString $year, $hour:$minute"
 
         if (hour < 10) {
-            myCurrentDay = "$day $monthString, 0$hour:$minute"
+            myCurrentDay = "$day $monthString $year, 0$hour:$minute"
         } else if (minute < 10) {
-            myCurrentDay = "$day $monthString, $hour:0$minute"
+            myCurrentDay = "$day $monthString $year, $hour:0$minute"
         } else if (hour < 10 && minute < 10) {
-            myCurrentDay = "$day $monthString, 0$hour:0$minute"
+            myCurrentDay = "$day $monthString $year, 0$hour:0$minute"
         }
 
         textDate.text = myCurrentDay
