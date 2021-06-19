@@ -1,4 +1,4 @@
-package com.melihd.prayertimekotlin
+package com.melihd.prayertimekotlin.view
 
 import android.content.Context
 import android.content.Intent
@@ -28,10 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         val myCity = getCityName.text.toString()
 
-        if (myCity != null) {
-            println("This is your city: " + myCity)
-            sharedPreferences.edit().putString("city", myCity).apply()
-        }
+        println("This is your city: " + myCity)
+        sharedPreferences.edit().putString("city", myCity).apply()
 
         // Get the current time and date
         val c = Calendar.getInstance()
@@ -53,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("hour", hour)
         intent.putExtra("minute", minute)
         startActivity(intent)
-//        finish()
+//       finish()
+
     }
 }

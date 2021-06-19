@@ -1,11 +1,11 @@
-package com.melihd.prayertimekotlin
+package com.melihd.prayertimekotlin.view
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.RequiresApi
+import com.melihd.prayertimekotlin.R
 import kotlinx.android.synthetic.main.activity_prayer_time.*
-import java.time.LocalDateTime
 
 class PrayerTimeActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -51,6 +51,7 @@ class PrayerTimeActivity : AppCompatActivity() {
         }
 
         textDate.text = myCurrentDay
+
 
 
     }
