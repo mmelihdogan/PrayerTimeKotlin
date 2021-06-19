@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:textColor="#00B7EB"
         android:textSize="34sp"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="29dp" />
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="129dp" />
 
     <TextView
         android:id="@+id/textDate"
@@ -21,6 +21,14 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="16sp"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="101dp" />
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="25dp" />
+
+    <TextView
+        android:id="@+id/textHijriDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="76dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

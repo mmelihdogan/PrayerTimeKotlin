@@ -33,6 +33,10 @@ class PrayerTimeActivity : AppCompatActivity() {
         val hour = intent.getIntExtra("hour", 0)
         val minute = intent.getIntExtra("minute", 0)
         val monthString = intent.getStringExtra("monthString")
+        val hijriDay = intent.getIntExtra("hijriDay", 0)
+        val hijriMonth = intent.getIntExtra("hijriMonth", 0)
+        val hijriYear = intent.getIntExtra("hijriYear", 0)
+        val hijriMonthString = intent.getStringExtra("hijriMonthString")
 
         textCityName.text = city
 
@@ -47,6 +51,8 @@ class PrayerTimeActivity : AppCompatActivity() {
         }
 
         textDate.text = myCurrentDay
+
+        textHijriDate.text = "$hijriDay $hijriMonthString $hijriYear"
 
         loadData()
 
@@ -70,10 +76,18 @@ class PrayerTimeActivity : AppCompatActivity() {
                         response.body()?.let {
                             prayerModels = ArrayList(it)
 
-                            for (prayerModel : PrayerTimeModel in prayerModels!!) {
-                                println(prayerModel.asr)
-                                println(prayerModel.fajr)
-                            }
+                                println(prayerModels!![0].id)
+                                println(prayerModels!![0].country)
+                                println(prayerModels!![0].city)
+                                println(prayerModels!![0].region)
+                                println(prayerModels!![0].date)
+                                println(prayerModels!![0].fajr)
+                                println(prayerModels!![0].sun)
+                                println(prayerModels!![0].dhuhr)
+                                println(prayerModels!![0].asr)
+                                println(prayerModels!![0].maghrib)
+                                println(prayerModels!![0].isha)
+
                         }
                     }
                 }

@@ -3,21 +3,16 @@ package com.melihd.prayertimekotlin.view
 import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
+import android.icu.util.IslamicCalendar
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.melihd.prayertimekotlin.R.layout.activity_main
-import com.melihd.prayertimekotlin.model.PrayerTimeModel
-import com.melihd.prayertimekotlin.service.PrayerTimeAPI
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
+import java.time.chrono.HijrahDate
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,6 +51,41 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences.edit().putInt("hour", hour).apply()
         sharedPreferences.edit().putInt("minute", minute).apply()
 
+//        val localDate: LocalDate = LocalDate.of(year, month, day);
+//        val hijrahDate: HijrahDate = HijrahDate.from(localDate)
+
+        val hijriDateString = HijrahDate.now().toString().split(" ").toTypedArray()
+
+        println("Hijri: " + HijrahDate.now())
+
+        val hijriDate = hijriDateString[2].split("-").toTypedArray()
+
+//        for (item in hijriDate) {
+//            println(item)
+//        }
+
+        val hijriYear = hijriDate[0].toInt()
+        val hijriMonth = hijriDate[1].toInt()
+        val hijriDay = hijriDate[2].toInt()
+
+
+        val HIJRI_MONTHS = arrayListOf<String>(
+            "Muharrem",
+            "Safer",
+            "Rebiülevvel",
+            "Rebiülahir",
+            "Cemaziyelevvel",
+            "Cemaziyelahir",
+            "Recep",
+            "Şaban",
+            "Ramazan",
+            "Şevval",
+            "Zilkade",
+            "Zilhicce")
+
+        val hijriMonthString = HIJRI_MONTHS[hijriMonth-1]
+
+
         val MONTHS = arrayListOf<String>(
             "January",
             "February",
@@ -80,6 +110,11 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("hour", hour)
         intent.putExtra("minute", minute)
         intent.putExtra("monthString", monthString)
+        intent.putExtra("hijriYear", hijriYear)
+        intent.putExtra("hijriMonth", hijriMonth)
+        intent.putExtra("hijriDay", hijriDay)
+        intent.putExtra("hijriMonthString", hijriMonthString)
+
         startActivity(intent)
         finish()
 
