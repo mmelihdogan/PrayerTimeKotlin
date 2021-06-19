@@ -9,6 +9,6 @@ interface PrayerTimeAPI {
     // https://prayertimes.api.abdus.dev/api/diyanet/search?q=istanbul
     // https://prayertimes.api.abdus.dev/api/diyanet/prayertimes?location_id=9541
 
-    @GET("search?q=")
+    @GET("prayertimes?location_id=9541")
     fun getData() : Call<List<PrayerTimeModel>>
 }
