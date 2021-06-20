@@ -1,13 +1,19 @@
 package com.melihd.prayertimekotlin.view
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.melihd.prayertimekotlin.R
+import com.melihd.prayertimekotlin.adapter.RecyclerViewAdapter
 import com.melihd.prayertimekotlin.model.PrayerTimeModel
 import com.melihd.prayertimekotlin.service.PrayerTimeAPI
 import kotlinx.android.synthetic.main.activity_prayer_time.*
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,6 +24,8 @@ class PrayerTimeActivity : AppCompatActivity() {
 
     private val BASE_URL = "https://prayertimes.api.abdus.dev/api/diyanet/"
     private var prayerModels : ArrayList<PrayerTimeModel>? = null
+
+    private var recyclerViewAdapter : RecyclerViewAdapter? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +62,9 @@ class PrayerTimeActivity : AppCompatActivity() {
 
         textHijriDate.text = "$hijriDay $hijriMonthString $hijriYear"
 
+        val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+
         loadData()
 
         }
@@ -76,10 +87,12 @@ class PrayerTimeActivity : AppCompatActivity() {
                         response.body()?.let {
                             prayerModels = ArrayList(it)
 
-                                println(prayerModels!![0].id)
-                                println(prayerModels!![0].country)
-                                println(prayerModels!![0].city)
-                                println(prayerModels!![0].region)
+                            prayerModels?.let {
+                                recyclerViewAdapter = RecyclerViewAdapter(it)
+                                recyclerView.adapter = recyclerViewAdapter
+                            }
+
+
                                 println(prayerModels!![0].date)
                                 println(prayerModels!![0].fajr)
                                 println(prayerModels!![0].sun)
@@ -97,6 +110,7 @@ class PrayerTimeActivity : AppCompatActivity() {
                 }
 
             })
+
         }
 
 }
