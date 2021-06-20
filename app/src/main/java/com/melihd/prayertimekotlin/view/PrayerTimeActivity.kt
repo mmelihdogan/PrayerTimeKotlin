@@ -11,6 +11,9 @@ import com.melihd.prayertimekotlin.R
 import com.melihd.prayertimekotlin.adapter.RecyclerViewAdapter
 import com.melihd.prayertimekotlin.model.PrayerTimeModel
 import com.melihd.prayertimekotlin.service.PrayerTimeAPI
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_prayer_time.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -18,6 +21,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PrayerTimeActivity : AppCompatActivity() {
@@ -27,10 +31,14 @@ class PrayerTimeActivity : AppCompatActivity() {
 
     private var recyclerViewAdapter : RecyclerViewAdapter? = null
 
+    // Disposable
+    private var compositeDisposable : CompositeDisposable? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_prayer_time)
+
 
         // getIntent
         val intent = intent
@@ -65,6 +73,9 @@ class PrayerTimeActivity : AppCompatActivity() {
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
 
+        compositeDisposable = CompositeDisposable()
+
+
         loadData()
 
         }
@@ -73,9 +84,18 @@ class PrayerTimeActivity : AppCompatActivity() {
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .build()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build().create(PrayerTimeAPI::class.java)
 
+            compositeDisposable?.add(retrofit.getData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleResponse)
+            )
+
+            /*
             val service = retrofit.create(PrayerTimeAPI::class.java)
+
             val call = service.getData()
 
             call.enqueue(object: Callback<List<PrayerTimeModel>>{
@@ -111,8 +131,27 @@ class PrayerTimeActivity : AppCompatActivity() {
 
             })
 
+            */
+
         }
 
+    private fun handleResponse(prayerList: List<PrayerTimeModel>) {
+        prayerModels = ArrayList(prayerList)
+
+        prayerModels?.let {
+            recyclerViewAdapter = RecyclerViewAdapter(it)
+            recyclerView.adapter = recyclerViewAdapter
+        }
+
+        println(prayerModels!![0].date)
+        println(prayerModels!![0].fajr)
+        println(prayerModels!![0].sun)
+        println(prayerModels!![0].dhuhr)
+        println(prayerModels!![0].asr)
+        println(prayerModels!![0].maghrib)
+        println(prayerModels!![0].isha)
+
+    }
 }
 
 
