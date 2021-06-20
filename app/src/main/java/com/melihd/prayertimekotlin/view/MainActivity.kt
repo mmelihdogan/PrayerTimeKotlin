@@ -16,6 +16,7 @@ import java.time.chrono.HijrahDate
 
 class MainActivity : AppCompatActivity() {
 
+    /// MELIH DOGAN - 2016502192
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
