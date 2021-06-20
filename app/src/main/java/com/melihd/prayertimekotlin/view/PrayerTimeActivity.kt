@@ -58,12 +58,12 @@ class PrayerTimeActivity : AppCompatActivity() {
 
         var myCurrentDay = "$day $monthString $year, $hour:$minute"
 
-        if (hour < 10) {
-            myCurrentDay = "$day $monthString $year, 0$hour:$minute"
+        if (hour < 10 && minute < 10) {
+            myCurrentDay = "$day $monthString $year, 0$hour:0$minute"
         } else if (minute < 10) {
             myCurrentDay = "$day $monthString $year, $hour:0$minute"
-        } else if (hour < 10 && minute < 10) {
-            myCurrentDay = "$day $monthString $year, 0$hour:0$minute"
+        } else if (hour < 10) {
+            myCurrentDay = "$day $monthString $year, 0$hour:$minute"
         }
 
         textDate.text = myCurrentDay
